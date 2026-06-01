@@ -41,8 +41,44 @@ export class InMemoryStudentRepository implements StudentRepository {
     // Simulamos un retraso de red
     return new Promise((resolve) => {
       setTimeout(() => {
-        resolve(this.students);
+        resolve([...this.students]);
       }, 500);
+    });
+  }
+
+  async createStudent(studentData: Omit<Student, 'id'>): Promise<Student> {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        const newStudent: Student = {
+          ...studentData,
+          id: Date.now().toString(),
+        };
+        this.students.push(newStudent);
+        resolve(newStudent);
+      }, 300);
+    });
+  }
+
+  async updateStudent(student: Student): Promise<Student> {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        const index = this.students.findIndex(s => s.id === student.id);
+        if (index === -1) {
+          reject(new Error('Estudiante no encontrado'));
+          return;
+        }
+        this.students[index] = student;
+        resolve(student);
+      }, 300);
+    });
+  }
+
+  async deleteStudent(id: string): Promise<void> {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        this.students = this.students.filter(s => s.id !== id);
+        resolve();
+      }, 300);
     });
   }
 }
