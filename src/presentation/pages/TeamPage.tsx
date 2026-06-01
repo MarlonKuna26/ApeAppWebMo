@@ -5,7 +5,9 @@ import { CreateStudentUseCase } from '../../application/CreateStudentUseCase';
 import { UpdateStudentUseCase } from '../../application/UpdateStudentUseCase';
 import { DeleteStudentUseCase } from '../../application/DeleteStudentUseCase';
 import { StudentCard } from '../components/StudentCard';
+
 import { StudentForm } from '../components/StudentForm';
+
 
 interface TeamPageProps {
   getUseCase: GetTeamMembersUseCase;
@@ -17,20 +19,7 @@ interface TeamPageProps {
 export const TeamPage = ({ getUseCase, createUseCase, updateUseCase, deleteUseCase }: TeamPageProps) => {
   const [students, setStudents] = useState<Student[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [studentToEdit, setStudentToEdit] = useState<Student | null>(null);
 
-  const fetchTeam = async () => {
-    setLoading(true);
-    try {
-      const data = await getUseCase.execute();
-      setStudents(data);
-    } catch (error) {
-      console.error('Failed to fetch team members:', error);
-    } finally {
-      setLoading(false);
-    }
-  };
 
   useEffect(() => {
     fetchTeam();
@@ -79,7 +68,7 @@ export const TeamPage = ({ getUseCase, createUseCase, updateUseCase, deleteUseCa
       <div className="absolute bottom-[-10%] right-[-10%] w-96 h-96 bg-blue-600/20 rounded-full blur-[100px]"></div>
       
       <div className="max-w-7xl w-full z-10 relative">
-        <div className="text-center mb-16 relative">
+
           <h1 className="text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 mb-4 tracking-tight drop-shadow-sm">
             Nuestro Equipo
           </h1>
