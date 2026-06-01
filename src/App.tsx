@@ -4,14 +4,21 @@ import { LoginPage } from './presentation/pages/LoginPage';
 import { ProtectedRoute } from './presentation/components/ProtectedRoute';
 import { AuthProvider } from './presentation/context/AuthContext';
 import { GetTeamMembersUseCase } from './application/GetTeamMembersUseCase';
+import { CreateStudentUseCase } from './application/CreateStudentUseCase';
+import { UpdateStudentUseCase } from './application/UpdateStudentUseCase';
+import { DeleteStudentUseCase } from './application/DeleteStudentUseCase';
 import { InMemoryStudentRepository } from './infrastructure/InMemoryStudentRepository';
 
 function App() {
   // Dependency Injection setup for Team Members
   const repository = new InMemoryStudentRepository();
   const getTeamMembersUseCase = new GetTeamMembersUseCase(repository);
+  const createStudentUseCase = new CreateStudentUseCase(repository);
+  const updateStudentUseCase = new UpdateStudentUseCase(repository);
+  const deleteStudentUseCase = new DeleteStudentUseCase(repository);
 
   return (
+
     <AuthProvider>
       <BrowserRouter>
         <div className="App">
@@ -30,6 +37,7 @@ function App() {
         </div>
       </BrowserRouter>
     </AuthProvider>
+
   );
 }
 
